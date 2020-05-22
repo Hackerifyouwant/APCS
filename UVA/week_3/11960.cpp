@@ -1,61 +1,54 @@
 #include<iostream>
-#include<string.h>
 #include<cmath>
-#include<algorithm>
-#include<vector>
 
 #define ll long long
 #define endl '\n'
+#define maxn 1000000
+
+int p[maxn + 5], ans[maxn + 5];
 
 using namespace std;
 
-vector <ll> prime;
-ll tbl[1000005];
-ll factor[1000005];
-
-void prime_(int max){
-    for(int i = 2; i <= max; i++){
-        if(tbl[i] == 0){
-            prime.push_back(i);
-        }
-        for(int k = i + i; k <= max; k+=i){
-            tbl[k] = 1;
-        }
-    }
-    for(int i = 1; i <= max; i++){
-        cout << i << " " << tbl[i] << endl;
-    }
-}
-
-int pri(int x){
-    int sum;
-    if(tbl[x] == 0){
-        return 2;
-    }else{
-        for(int i = 0; i < prime.size(); i++){
-            if(x % prime[i] == 0){
-                x /= i;
-                sum += 2;
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    for(int i = 2; i <= sqrt(maxn); i++){
+        if(p[i] == 0){
+            for(int j = i * i ; j <= maxn; j += i){
+                if(p[j] == 0)p[j] = i;
             }
         }
     }
-}
-
-
-int main(){
-    ll T;
-    
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cin >> T;
-    ll max_input = -1;
-    for(int i = 0; i < T; i++){
-        ll N;
-        cin >> N;
-        max_input = max(max_input, N);
+    for(int i = 0; i <= maxn; i++){
+        if (p[i] == 0) p[i] = i;
     }
-    prime_(max_input);
-
-        
+	int nowi, nownum = 0;
+    for(int i = 1; i <= maxn; i++){
+        int x = i, num = 1;
+        while(x > 1){
+            int tmp = p[x], cnt = 0;
+            while((x % tmp) == 0){
+                cnt++;
+                x /= tmp;
+            }
+            num *= (cnt + 1);
+        }
+        if(num >= nownum){
+            ans[i] = i;
+            nowi = i;
+            nownum = num;
+        }else{
+            ans[i] = nowi;
+        }
+    }
+    int t, n;
+    cin >> t;
+    while(t--){
+        cin >> n;
+        cout << ans[n] << endl;
+    }
     return 0;
 }
+
+
+

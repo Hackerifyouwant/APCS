@@ -1,58 +1,43 @@
+#include<stdio.h>
 #include<iostream>
 
-#define ll unsigned long long
+#define ll long long
 #define endl '\n'
 
 using namespace std;
-
-int negative = 1;
-
-bool check(ll N){
-    if(N > 6227020800){
-        cout << "Overflow!" << endl;
-        return 0;
-    }
-    else if(N < 10000){
-        cout << " Underflow!" << endl;
-        return 0;
-    }else{
-        return 1;
-    }
-}
-
-ll Factorial_(int n){
-    ll N;
-    if(n == 1)return 1;
-    N = n * Factorial_(n - 1);
-    if(check(n))return 0;
-    return n * Factorial_(n - 1);
-}
-
-ll Factorial(int n){
-    ll N;
-    if(n == 1)return 1;
-    N = n * Factorial(n - 1);
-    negative *= negative;
-    //cout << N * negative << endl;
-    //if(check(N))return 0;
-    return n * Factorial(n - 1);
-}
-
+ 
 int main(){
-    long long n;
+    long long int n, ans, fac;
+    int i, over;
+ 
     while(cin >> n){
-        negative = 1;
         if(n < 0){
-            negative = -1;
-            n *= -1;
-            ll F = Factorial(n);
-            cout << F << endl;
+            n = 0 - n;
+            if(n % 2 == 0){
+                cout << "Underflow!" << endl;
+            }else{
+                cout << "Overflow!" << endl;
+            }
         }else{
-            ll F = Factorial_(n);
-            cout << F << endl;
+            fac = 1;
+            over = 0;
+            for(i = 1 ; i <= n ; i++){
+                fac = fac * i;
+                if(fac > 6227020800) {
+                    cout << "Overflow!" << endl;
+                    over++;
+                    break;
+                }
+            }
+            if(over == 0){
+                if(fac < 10000){
+                    cout << "Underflow!" << endl;
+                }
+                else{
+                    cout << fac << endl;
+                }
+            }
         }
     }
-
-
     return 0;
 }

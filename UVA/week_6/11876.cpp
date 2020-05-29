@@ -15,28 +15,11 @@ ll prime_c = 0;
 ll prime_[MAX];
 ll tbl[MAX];
 
-// int NOD(int x){
-//     ll X = x;
-//     if(nod[x] != 0)return nod[x];
-//     ll i = 0;
-//     ll count = 1;
-//     ll ans = 1;
-//     while(x > 1){
-//         while(x % prime_[i] == 0){
-//             count ++;
-//             x /= prime_[i];
-//         }
-//         ans *= count;
-//         count = 1;
-//         i++;
-//     }
-//     nod[X] = ans;
-//     return ans;
-// }
+
 int NOD(int n) {
     int ans = 1, cnt = 0, i;
     for(i = 0; i < prime_c && prime_[i] * prime_[i] <= n; i++) {
-        if(n%prime_[i] == 0) {
+        if(n % prime_[i] == 0) {
             cnt = 0;
             while(n % prime_[i] == 0)
                 cnt++, n /= prime_[i];

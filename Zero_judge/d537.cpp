@@ -1,52 +1,52 @@
+#include <stdio.h>
 #include<iostream>
-#include<queue>
 
 #define ll long long
 #define endl '\n'
 
 using namespace std;
 
-struct N{
-    char color[3];
-    int index;
-    int x;
-    int y;
-};
-struct N coor[3];
-int way[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
-// char combination(char a, char b, ){
-//     if(a == 'R' && b == 'B' && )
-// }
 
-void Flood_Fill(){
-    queue< struct N > travel;
-    for(int i = 0;i < 3; i++){
-        travel.push(coor[i]);
-    }
-    while(!travel.empty()){
-        struct N u = travel.front();
-        travel.pop();
-        for(int j = 0; j < 4; j++){
-            struct N Nxy;
-            Nxy.x = u.x + way[j][0];
-            Nxy.y = u.y + way[j][1];
-            Nxy.color[Nxy.index++] = u.color[u.index++];
-            travel.push(Nxy);
+int main() {
+    int n;
+    while(cin >> n && n) {
+        int ans = 0, i, j, k, t;
+        char c[3][3], J[3];
+        int x[3], y[3];
+        for(i = 0; i < 3; i++)
+            cin >> c[i] >> x[i] >> y[i];
+        cin >> J;
+        int judge = 0;
+        switch(J[0]) {
+            case 'R':judge = 1;break;
+            case 'Y':judge = 2;break;
+            case 'B':judge = 4;break;
+            case 'O':judge = 3;break;
+            case 'P':judge = 5;break;
+            case 'G':judge = 6;break;
+            case 'D':judge = 7;break;
         }
-        if() 
+        for(t = 0; t <= n; t++) {
+            int color[8] = {};
+            for(i = 0; i < n; i++) {
+                for(j = 0; j < n; j++) {
+                    int RYB = 0;
+                    for(k = 0; k < 3; k++) {
+                        int lx = x[k]-t, rx = x[k]+t;
+                        int ly = y[k]-t, ry = y[k]+t;
+                        if(lx <= i && i <= rx && ly <= j && j <= ry) {
+                            if(c[k][0] == 'R')  RYB |= 1;
+                            if(c[k][0] == 'Y')  RYB |= 2;
+                            if(c[k][0] == 'B')  RYB |= 4;
+                        }
+                    }
+                    color[RYB]++;
+                }
+            }
+            if(color[judge] > ans)
+                ans = color[judge];
+        }
+        printf("%d\n", ans);
     }
-}
-
-int main(){
-    int N;
-    cin >> N;
-    int map[105][105];
-    char search_color;
-    for(int i = 0; i < 3; i++){
-        cin >> coor[i].color >> coor[i].x >> coor[i].y;
-    }
-    cin >> search_color;
-    Flood_Fill();
-
     return 0;
 }
